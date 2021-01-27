@@ -178,7 +178,7 @@ while ($linenum <= $previewrows && $fields = $cir->next()) {
         switch ($rowcols['contextlevel']) {
             case '40':
                 $rowcols['contextlevel'] = "Category";
-                $rowcols['contextid'] = $DB->get_field('course_categories', 'name', array('id' => $rowcols['contextid']));
+                $rowcols['contextid'] = $DB->get('course_categories', 'name', array('id' => $rowcols['contextid']));
                 if(!empty($rowcols['contextid'])){
                     break;
                 }
@@ -195,7 +195,10 @@ while ($linenum <= $previewrows && $fields = $cir->next()) {
                 break;
             case '70':
                 $rowcols['contextlevel'] = "Assignment";
-                $rowcols['contextid'] = $DB->get_field('assign', 'name', array('id' => $rowcols['contextid']));
+                $rowcols['contextid'] = $DB->get_field_sql('SELECT ass.name as name
+                                                                    FROM mdl_assign AS ass
+                                                                    JOIN mdl_course_modules AS cm ON ass.id = cm.instance
+                                                                    WHERE cm.id = ?', array('id' => $rowcols['contextid']));
                 if(!empty($rowcols['contextid'])){
                     break;
                 }
