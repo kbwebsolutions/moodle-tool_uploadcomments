@@ -30,7 +30,7 @@ function uu_validate_comments_upload_columns(csv_import_reader $cir, $stdfields,
         $cir->cleanup();
         print_error('cannotreadtmpfile', 'error', $returnurl);
     }
-    if (count($columns) < 2) {
+    if (count($columns) < 3) {
         $cir->close();
         $cir->cleanup();
         print_error('csvfewcolumns', 'error', $returnurl);
